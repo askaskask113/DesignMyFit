@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Design Request - DesignMyFit</title>
+  <link rel="stylesheet" href="styleup.css">
+</head>
+<body class="request-page">
+
+  <header class="navbar">
+    <h1>DesignMyFit</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="request.html">Design Request</a>
+      <a href="dashboard.html">Tailor Dashboard</a>
+    </nav>
+  </header>
+
+ <main class="container">
+
+  <div class="request-wrapper">
+
+    <h2>Submit Your Design Request</h2>
+    <p class="request-subtitle">
+      Fill the details below and submit your custom tailoring request.
+    </p>
+
+    <h3 id="selectedTailor"></h3>
+    <p id="selectedPrice" class="price-text"></p>
+
+    <form id="designForm" class="form-card">
+
+    <label>Full Name</label>
+    <input type="text" id="name" required />
+
+    <label>Contact (Phone or Email)</label>
+    <input type="text" id="contact" required />
+
+    <label>Dress Type</label>
+    <select id="dressType">
+      <option>Kurta</option>
+      <option>Lehenga</option>
+      <option>Blouse</option>
+      <option>T-Shirt</option>
+      <option>Formal Suit</option>
+    </select>
+
+    <label>Fabric Preference</label>
+    <select id="fabric">
+      <option>Cotton</option>
+      <option>Silk</option>
+      <option>Linen</option>
+      <option>Velvet</option>
+      <option>Chiffon</option>
+    </select>
+
+    <label>Preferred Colors</label>
+    <input type="text" id="colors" placeholder="Red, Blue, White" />
+
+    <label>Custom Text (optional)</label>
+    <input type="text" id="customText" placeholder="e.g., Name Print" />
+
+    <label>Size</label>
+    <textarea id="notes"></textarea>
+
+    <button class="primary-btn" type="submit">Submit Request</button>
+
+  </form>
+
+</main>
+
+<script>
+  // GET URL PARAMETERS
+  const params = new URLSearchParams(window.location.search);
+  const tailor = params.get("tailor");
+  const price = params.get("price");
+
+  // SHOW SELECTED TAILOR
+  if (tailor) {
+    document.getElementById("selectedTailor").innerText =
+      "Design Request for " + tailor;
+  }
+
+  // SHOW PRICE
+  if (price) {
+    document.getElementById("selectedPrice").innerText =
+      "Starting Price: ₹" + price;
+  }
+
+  // FORM SUBMIT
+  document.getElementById("designForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // VERY IMPORTANT
+
+    const data = {
+      name: document.getElementById("name").value,
+      contact: document.getElementById("contact").value,
+      dressType: document.getElementById("dressType").value,
+      fabric: document.getElementById("fabric").value,
+      colors: document.getElementById("colors").value,
+      customText: document.getElementById("customText").value,
+      notes: document.getElementById("notes").value,
+      tailor: tailor,
+      startingPrice: price
+    };
+
+    const API = "https://693aedfa9b80ba7262cbecf7.mockapi.io/requests";
+
+    fetch(API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(result => {
+        alert("Request sent successfully!");
+        document.getElementById("designForm").reset();
+        console.log("Saved:", result);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("Failed to send request");
+      });
+  });
+</script>
+
+
+ 
+</body>
+
+
+</html>

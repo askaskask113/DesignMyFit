@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tailor Details - DesignMyFit</title>
+  <link rel="stylesheet" href="styleup.css">
+</head>
+<body>
+
+<header class="navbar">
+  <h1>DesignMyFit</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="request.html">Design Request</a>
+  </nav>
+</header>
+
+<main class="container">
+  <h2 id="tailorName">Tailor</h2>
+
+  <div class="card">
+    <p><strong>Speciality:</strong> Bridal & Lehenga</p>
+    <p><strong>Starting Price:</strong> ₹1500</p>
+
+    <a href="request.html" class="primary-btn">
+      Start a Design Request
+    </a>
+  </div>
+</main>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const tailor = params.get("name");
+
+  const title = document.getElementById("tailorName");
+
+  if (tailor === "royal") title.innerText = "Royal Stitches";
+  if (tailor === "campus") title.innerText = "Campus Tailor";
+  if (tailor === "print") title.innerText = "Print & Thread";
+</script>
+
+</body>
+</html>
